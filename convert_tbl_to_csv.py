@@ -131,7 +131,5 @@ def main():
             # UPDATE ROW COUNTER
             row_counter += len(d)
 
-
 if __name__ == "__main__":
     main()
-    # i, d = reformat_data(f"./WASP-39b Data/WASP_39_b_3.11466_3717_1.tbl")
