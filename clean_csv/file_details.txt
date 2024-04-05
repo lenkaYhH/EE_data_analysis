@@ -1,0 +1,256 @@
+
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_3491_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Marconi CCD
+            Facility: Observatorio Astronomico Nacional's 2.1m Telescope
+            Note: None
+            Reference: Ricci-et-al.-2015
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 1 to and not including index 2
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_3491_2.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Mexman
+            Facility: Observatorio Astronomico Nacional's 0.84m Telescope
+            Note: None
+            Reference: Ricci-et-al.-2015
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 2 to and not including index 4
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_3717_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Infrared Array Camera (IRAC)
+            Facility: Spitzer Space Telescope satellite
+            Note: None
+            Reference: Sing-et-al.-2016
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 4 to and not including index 6
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_3717_2.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Space Telescope Imaging Spectrograph
+            Facility: Hubble Space Telescope satellite
+            Note: None
+            Reference: Sing-et-al.-2016
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 6 to and not including index 39
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_3868_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Infrared Array Camera (IRAC)
+            Facility: Spitzer Space Telescope satellite
+            Note: None
+            Reference: Fischer-et-al.-2016
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 39 to and not including index 41
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_3868_2.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Space Telescope Imaging Spectrograph
+            Facility: Hubble Space Telescope satellite
+            Note: None
+            Reference: Fischer-et-al.-2016
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 41 to and not including index 74
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_3939_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: FORS2
+            Facility: Very Large Telescope (Antu)
+            Note: None
+            Reference: Nikolov-et-al.-2016
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 74 to and not including index 102
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_4132_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Wide Field Camera 3
+            Facility: Hubble Space Telescope satellite
+            Note: None
+            Reference: Wakeford-et-al. 2018
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 102 to and not including index 138
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_4988_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Spectrograph (NIRSpec)
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: Eureka! pipeline
+            Reference: JWST Transiting Exoplanet Community ERS Team 2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 138 to and not including index 232
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_4988_2.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Spectrograph (NIRSpec)
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: FIREFLy pipeline
+            Reference: JWST Transiting Exoplanet Community ERS Team 2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 232 to and not including index 327
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_4988_3.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Spectrograph (NIRSpec)
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: tshirt pipeline
+            Reference: JWST Transiting Exoplanet Community ERS Team 2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 327 to and not including index 394
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_4988_4.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Spectrograph (NIRSpec)
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: Tiberius pipeline
+            Reference: JWST Transiting Exoplanet Community ERS Team 2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 394 to and not including index 637
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_5040_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Camera (NIRCam)
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: None
+            Reference: Ahrer-et-al.-2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 637 to and not including index 744
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_5077_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Spectrograph (NIRSpec) - G395H
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: None
+            Reference: Alderson-et-al.-2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 744 to and not including index 1088
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_5078_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Imager and Slitless Spectrograph (NIRISS)
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: None
+            Reference: Feinstein-et-al.-2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 1088 to and not including index 1419
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_5087_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Spectrograph (NIRSpec) - PRISM
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: None
+            Reference: Rustamkulov-et-al.-2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 1419 to and not including index 1626
+        ----------------------------------------------------------------------
+
+            
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_5295_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Wide Field Camera 3
+            Facility: Hubble Space Telescope satellite
+            Note: null
+            Reference: Panek-et-al.-2023
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 1626 to and not including index 1646
+        ----------------------------------------------------------------------
+
+            

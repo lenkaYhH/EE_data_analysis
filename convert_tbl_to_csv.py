@@ -3,7 +3,7 @@ import os
 
 COLUMN_LABELS = ["CENTRALWAVELNG", "BANDWIDTH", "PL_TRANDEP", "PL_TRANDEPERR1", "PL_TRANDEPERR2", "PL_TRANDEPLIM", "PL_TRANDEP_AUTHORS", "PL_TRANDEP_URL", "PL_RATROR", "PL_RATRORERR1", "PL_RATRORERR2", "PL_RATRORLIM", "PL_RATROR_AUTHORS", "PL_RATROR_URL", "PL_RADJ", "PL_RADJERR1", "PL_RADJERR2", "PL_RADJLIM", "PL_RADJ_AUTHORS", "PL_RADJ_URL", "PL_TRANMID", "PL_TRANMIDERR1", "PL_TRANMIDERR2", "PL_TRANMIDLIM", "ST_RAD", "ST_RADERR1", "ST_RADERR2", "ST_RAD_AUTHORS", "ST_RAD_URL"]
 
-ALL_FILES = list()
+COMMON_CSV_PATH = './clean_csv/all_data.csv'
 
 class File:
     def __init__(self, path, start_index, end_index, info):
@@ -20,7 +20,9 @@ class File:
     
     def __str__(self):
 
-        return f"""FILE DETAILS FOR: {self.path} 
+        return f"""
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: {self.path} 
             Planet Name: {self.specs["planet_name"]}
             Spectrum Type: {self.specs["spectrum_type"]}
             Instrument: {self.specs["instrument"]}
@@ -31,6 +33,8 @@ class File:
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
             Index {self.loc_in_csv[0]} to and not including index {self.loc_in_csv[1]}
+        ----------------------------------------------------------------------
+
             """
 
     
@@ -67,13 +71,17 @@ def reformat_data(file_name):
         # print(len(all_lines))
 
         for line in all_lines:
+            # Append only the SPECS VALUES into the INFO list
             if line[0] == "\\" and line[1:].strip():
                 INFO.append(line.strip()[1:].split(" = ")[-1])
 
+            # ignores the column titles (COLUMN TITLES are already globalized)
             elif line[0] == "|":
                 pass
-
-            else:
+            
+            # append the line of data into a list
+            elif line[0] != "\\":
+                # print(line)
                 items = line.split(" ")
                 items = [x.strip() for x in items if len(x.strip())]
 
@@ -81,14 +89,49 @@ def reformat_data(file_name):
 
     return INFO, DATA
 
-
-def write_data_to_csv(data):
-    raise NotImplementedError
-
 def main():
-    # reformat_data('./WASP-39b Data/WASP_39_b_3.11466_4132_1.tbl')
-    i, d = reformat_data('./WASP-39b Data/WASP_39_b_3.11466_3491_1.tbl')
-    print(i)
+    # CLEARING COMMON CSV FILE
+    f = open(COMMON_CSV_PATH, 'w+')
+    f.close()
+
+    # CLEARING COMMON TEXT FILE
+    f = open('./clean_csv/file_details.txt', 'w+')
+    f.close()
+
+    with open(COMMON_CSV_PATH, 'w', newline='') as csvfile, open('./clean_csv/file_details.txt', 'a') as details_file:
+        CSVwriter = csv.writer(csvfile)
+
+        # WRITING HEADINGS INTO COMMON CSV FILE
+        CSVwriter.writerow(COLUMN_LABELS)
+
+        row_counter = 1
+
+        # GOING THROUGH EACH RAW DATA FILE
+        for j, filename in enumerate(os.listdir('./WASP-39b Data')):
+            print(f"ON FILE NUMBER {j}")
+            print(f"    Reformatting data...")
+
+            i, d = reformat_data(f"./WASP-39b Data/{filename}")
+
+            print("    Data Reformatted")
+
+            #  WRITING FILE DATA INTO COMMON CSV
+            print("    Writing reformatted data into common CSV file...")
+            CSVwriter.writerows(d)
+            print("    Done")
+            
+            # WRITING FILE SPECIFICATIONS INTO COMMON TEXTFILE
+            print("     Reorganizing file details and specifications into the common textfile")
+            file_info_base = File(filename, row_counter, row_counter+len(d), i)
+            details_file.write(str(file_info_base))
+            print("     Done")
+
+            print(f"data of FILE NUMBER {j} can now be found from index {row_counter} to {row_counter+len(d)-1}\n\n")
+
+            # UPDATE ROW COUNTER
+            row_counter += len(d)
+
 
 if __name__ == "__main__":
     main()
+    # i, d = reformat_data(f"./WASP-39b Data/WASP_39_b_3.11466_3717_1.tbl")
