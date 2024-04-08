@@ -10,7 +10,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 1 to and not including index 2
+            Index 2 to and not including index 3
         ----------------------------------------------------------------------
 
             
@@ -25,7 +25,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 2 to and not including index 4
+            Index 3 to and not including index 5
         ----------------------------------------------------------------------
 
             
@@ -40,7 +40,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 4 to and not including index 6
+            Index 5 to and not including index 7
         ----------------------------------------------------------------------
 
             
@@ -55,7 +55,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 6 to and not including index 39
+            Index 7 to and not including index 40
         ----------------------------------------------------------------------
 
             
@@ -70,7 +70,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 39 to and not including index 41
+            Index 40 to and not including index 42
         ----------------------------------------------------------------------
 
             
@@ -85,7 +85,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 41 to and not including index 74
+            Index 42 to and not including index 75
         ----------------------------------------------------------------------
 
             
@@ -100,7 +100,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 74 to and not including index 102
+            Index 75 to and not including index 103
         ----------------------------------------------------------------------
 
             
@@ -115,7 +115,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 102 to and not including index 138
+            Index 103 to and not including index 139
         ----------------------------------------------------------------------
 
             
@@ -130,7 +130,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 138 to and not including index 232
+            Index 139 to and not including index 233
         ----------------------------------------------------------------------
 
             
@@ -145,7 +145,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 232 to and not including index 327
+            Index 233 to and not including index 328
         ----------------------------------------------------------------------
 
             
@@ -160,7 +160,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 327 to and not including index 394
+            Index 328 to and not including index 395
         ----------------------------------------------------------------------
 
             
@@ -175,7 +175,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 394 to and not including index 637
+            Index 395 to and not including index 638
         ----------------------------------------------------------------------
 
             
@@ -190,7 +190,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 637 to and not including index 744
+            Index 638 to and not including index 745
         ----------------------------------------------------------------------
 
             
@@ -205,7 +205,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 744 to and not including index 1088
+            Index 745 to and not including index 1089
         ----------------------------------------------------------------------
 
             
@@ -220,7 +220,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 1088 to and not including index 1419
+            Index 1089 to and not including index 1420
         ----------------------------------------------------------------------
 
             
@@ -235,7 +235,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 1419 to and not including index 1626
+            Index 1420 to and not including index 1627
         ----------------------------------------------------------------------
 
             
@@ -250,7 +250,7 @@
 
             DATA STORAGE DETAILS:
             In clean_csv > all_data.csv
-            Index 1626 to and not including index 1646
+            Index 1627 to and not including index 1647
         ----------------------------------------------------------------------
 
             

@@ -104,7 +104,8 @@ def main():
         # WRITING HEADINGS INTO COMMON CSV FILE
         CSVwriter.writerow(COLUMN_LABELS)
 
-        row_counter = 1
+        # starts counting in 2 because first row is headers
+        row_counter = 2
 
         # GOING THROUGH EACH RAW DATA FILE
         for j, filename in enumerate(os.listdir('./WASP-39b Data')):
