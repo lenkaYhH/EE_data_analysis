@@ -63,7 +63,7 @@ def plot(x, y, x_err=[], y_err=[], title=''):
 
 def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData()
-    plot(x_vals, y_vals, xerr_bars, yerr_bars, "Transmission Spectrum of WASP 39b")
+    plot(x_vals, y_vals, xerr_bars, yerr_bars, "Transmission Spectrum of WASP-39b")
 
 if __name__ == "__main__":
     main()
