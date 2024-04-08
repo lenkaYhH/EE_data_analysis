@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def sortData(min_wl=0, max_wl=10):
+def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
     """
     Inputs min-max wavelength range, in microns, to visualize (if any boundaries) and return x-y pofloats, 1D x-error bar values and 2D y-error bar values
     """
@@ -18,19 +18,21 @@ def sortData(min_wl=0, max_wl=10):
         for l in lines[1:]:
             data = l.split(",")
 
-            # for debugging
+            # for removing weird points
             if abs(float(data[3])) > 0.2 or abs(float(data[4])) > 0.2:
                 print(f"ODD DATA POINTS FOUND: wavelength of {data[0]} has very high transit depth errors of {data[3]} and {data[4]}")
 
                 # skip this outlier
-                continue
+                if remove_odd_points:
+                    continue
             
             if data[1] != 'null':
                 if abs(float(data[1])) > 0.5:
                     print(f"ODD DATA POINTS FOUND: wavelength of {data[0]} has very high wavelength absolute uncertainty of {data[1]}")
 
                     # skip this outlier
-                    continue
+                    if remove_odd_points:
+                        continue
 
             # if data is within plottable range
             if min_wl <= float(data[0]) <= max_wl:
@@ -50,7 +52,7 @@ def plot(x, y, x_err=[], y_err=[], title=''):
     """
     plots the data given
     """
-    
+
     plt.errorbar(x, y, xerr=x_err, yerr=y_err, fmt='.')
 
     plt.xlabel("Wavelength (micrometers)", loc='center')
