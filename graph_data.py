@@ -3,7 +3,7 @@ from astroquery.nist import Nist
 import astropy.units as u
 
 # MATPLOTLIB SUPPORTED COLORS
-COLORS = ['g', 'c', 'm', 'y', 'r']
+COLORS = ['c', 'r', 'y', 'silver', 'palegreen', 'slateblue', 'mistyrose', 'lavender']
 
 def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
     """
@@ -70,8 +70,8 @@ def fetchData(lowerbound, upperbound, element):
     for i in range(len(table)):
         
         # prevent if there are no observed values
-        if table[i][0] != '--':
-            x.append(round(float(table[i][0]), 3))
+        if table[i]["Observed"] != '--':
+            x.append(round(float(table[i]["Observed"]), 3))
     return x
 
 def plot(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
@@ -91,14 +91,14 @@ def plot(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
     # Fetch atomic data + graph
     for i, molec in enumerate(target_molecules):
 
-        print(f"CONDUCTING MOLECULAR ANALYSIS for {molec}")
+        print(f"\nCONDUCTING MOLECULAR ANALYSIS for {molec}")
 
         x_vals = fetchData(min_wl*1000, max_wl*1000, molec)
         print(f"    data fetched...")
         
         for j in range(len(x_vals)):
             if x_vals[j]/1000 >= LOWERBOUND:
-                ax.axvspan(x_vals[j]/1000, (x_vals[j]+0.001)/1000, alpha=0.5, color=COLORS[i])
+                ax.axvspan(x_vals[j]/1000, (x_vals[j]+0.001)/1000, alpha=0.25, color=COLORS[i])
 
         
     # Paper-proof the graph
@@ -110,12 +110,11 @@ def plot(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
     plt.grid()
     plt.show()
 
-
 def main():
 
     # TRANSMISSION SPECTRA DATA ANALYSIS -----------------------
     # SETS THE GRAPHING BOUNDARY in micrometers
-    min_val, max_val = 0, 5
+    min_val, max_val = 0, 3
 
     # sort data
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
