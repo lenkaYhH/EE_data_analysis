@@ -13,7 +13,8 @@ def fetchData(lowerbound, upperbound, element):
     return table
 
 def main():
-    fetchData(400, 410, "H")
+    t = fetchData(0.4, 0.7, "H")
+    print(t)
 
 if __name__ == "__main__":
     main()

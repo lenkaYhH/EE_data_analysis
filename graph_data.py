@@ -53,21 +53,6 @@ def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
                 
     return x, y, x_errorbars, y_errorbars
 
-def plot(x_data, y_data, x_err=[], y_err=[], title=''):
-    """
-    plots the data given
-    """
-    
-    fig = plt.figure()
-    ax = fig.add_subplot()
-    ax.errorbar(x_data, y_data, xerr=x_err, yerr=y_err, fmt='.', ls='none')
-
-    ax.set_xlabel("Wavelength (micrometers)", loc='center')
-    ax.set_ylabel("Transit Depth (%)", loc='center')
-    ax.set_title(title)
-
-    plt.show()
-
 def fetchData(lowerbound, upperbound, element):
     """
     Enter the lowerbound (in nm) and upperbound in nm
@@ -87,47 +72,57 @@ def fetchData(lowerbound, upperbound, element):
         # prevent if there are no observed values
         if table[i][0] != '--':
             x.append(round(float(table[i][0]), 3))
-
-    print(x)
     return x
 
-def main():
+def plot(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
 
-    # TRANSMISSION SPECTRA DATA ANALYSIS -----------------------
-    # SETS THE GRAPHING BOUNDARY in micrometers
-    min_val, max_val = 0.4, 1
+    LOWERBOUND = min(x_vals)
+    print(f"lowerbound: {LOWERBOUND}")
 
-    # sort data
-    x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
-
-    # Plots the normal data
+    # Initialize Graph
     fig = plt.figure()
     ax = fig.add_subplot()
-    ax.errorbar(x_vals, y_vals, xerr=xerr_bars, yerr=yerr_bars, fmt='.', ls='none')
+
+    # Plots Normal Data
+    ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, fmt='.', ls='none')
 
     # MOLECULAR ANALYSIS -------------------------
     # SETS THE TARGET MOLECULES in list for query 
-
-    target_molecules = []
-    # target_molecules = ["H"]
     
     # Fetch atomic data + graph
     for i, molec in enumerate(target_molecules):
 
         print(f"CONDUCTING MOLECULAR ANALYSIS for {molec}")
 
-        x_vals = fetchData(min_val*1000, max_val*1000, molec)
+        x_vals = fetchData(min_wl*1000, max_wl*1000, molec)
+        print(f"    data fetched...")
         
         for j in range(len(x_vals)):
-            ax.axvspan(x_vals[j]/1000, (x_vals[j]+0.001)/1000, alpha=0.5, color=COLORS[i])
+            if x_vals[j]/1000 >= LOWERBOUND:
+                ax.axvspan(x_vals[j]/1000, (x_vals[j]+0.001)/1000, alpha=0.5, color=COLORS[i])
 
         
     # Paper-proof the graph
     ax.set_xlabel("Wavelength (micrometers)", loc='center')
     ax.set_ylabel("Transit Depth (%)", loc='center')
-    ax.set_title(f"Transmission Spectrum of WASP-39b from {min_val} to {max_val} micrometers")
+    ax.set_title(f"Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers")
 
+    fig.tight_layout()
     plt.show()
+
+
+def main():
+
+    # TRANSMISSION SPECTRA DATA ANALYSIS -----------------------
+    # SETS THE GRAPHING BOUNDARY in micrometers
+    min_val, max_val = 0, 5
+
+    # sort data
+    x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
+
+    plot(x_vals, y_vals, xerr_bars, yerr_bars, ["H"], min_val, max_val)
+
+    
 
 if __name__ == "__main__":
     main()
