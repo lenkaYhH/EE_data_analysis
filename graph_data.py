@@ -32,7 +32,7 @@ def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
                     continue
             
             if data[1] != 'null':
-                if abs(float(data[1])) > 0.5:
+                if abs(float(data[1])) > 0.35:
                     print(f"ODD DATA POINTS FOUND: wavelength of {data[0]} has very high wavelength absolute uncertainty of {data[1]}")
 
                     # skip this outlier
@@ -77,7 +77,6 @@ def fetchData(lowerbound, upperbound, element):
 def plot(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
 
     LOWERBOUND = min(x_vals)
-    print(f"lowerbound: {LOWERBOUND}")
 
     # Initialize Graph
     fig = plt.figure()
@@ -108,6 +107,7 @@ def plot(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
     ax.set_title(f"Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers")
 
     fig.tight_layout()
+    plt.grid()
     plt.show()
 
 
@@ -120,9 +120,9 @@ def main():
     # sort data
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
+    # plotting
     plot(x_vals, y_vals, xerr_bars, yerr_bars, ["H"], min_val, max_val)
 
-    
 
 if __name__ == "__main__":
     main()
