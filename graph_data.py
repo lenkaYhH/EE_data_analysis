@@ -203,7 +203,7 @@ def plotClean(x, y, target_molecules=[], min_wl=0, max_wl=0):
         ax2.plot(x, y, marker='.', color=COLORS[i], label=molec)
 
     # Paper-proof the graph
-    ax1.set_title(f"Processed Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers")
+    ax1.set_title(f"Processed Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers, grouped by every {WAVELENGTH_GROUPING} micrometer")
     ax1.set_xlabel("Wavelength (micrometers)", loc='center')
     ax1.set_ylabel("Transit Depth (%)", loc='center')
     ax1.legend()
