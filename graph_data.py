@@ -158,8 +158,8 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=
         print(f"    data fetched...")
         
         for j in range(len(x_vals)):
-            if x_vals[j]/1000 >= LOWERBOUND:
-                ax.axvspan(x_vals[j], x_vals[j]+0.000001, alpha=0.25, color=COLORS[i])
+            if x_vals[j] >= LOWERBOUND:
+                ax.axvspan(x_vals[j], x_vals[j]+0.001, alpha=0.25, color=COLORS[i])
 
         
     # Paper-proof the graph
@@ -188,6 +188,7 @@ def plotClean(x, y, target_molecules=[], min_wl=0, max_wl=0):
     x, y = sortPlotCleanData(x, y, 'a')
 
     ax1.errorbar(x, y, marker='.', ls='none')
+    # ax1.errorbar(x, y, marker='.')
 
     # MOLECULAR ANALYSIS -----------------------------------
 
@@ -198,13 +199,15 @@ def plotClean(x, y, target_molecules=[], min_wl=0, max_wl=0):
         x, y = sortPlotCleanData(x, y, 's')
 
         # plot molecular data
-        ax2.plot(x, y, marker='.', ls='none', color=COLORS[i], label=molec)
+        # ax2.plot(x, y, marker='.', ls='none', color=COLORS[i], label=molec)
+        ax2.plot(x, y, marker='.', color=COLORS[i], label=molec)
 
     # Paper-proof the graph
     ax1.set_title(f"Processed Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers")
     ax1.set_xlabel("Wavelength (micrometers)", loc='center')
     ax1.set_ylabel("Transit Depth (%)", loc='center')
-    ax2.set_label("relative frequency of atomic emission")
+    ax1.legend()
+    ax2.set_ylabel("atomic spectra")
     ax2.legend()
 
     # show graph
@@ -222,7 +225,7 @@ def main():
 
     # plotting
     plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, ["H"], min_val, max_val)
-    # plotClean(x_vals, y_vals, ["H"], min_val, max_val)
+    plotClean(x_vals, y_vals, ["H"], min_val, max_val)
 
     plt.show()
 
