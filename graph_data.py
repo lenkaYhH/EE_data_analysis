@@ -3,7 +3,7 @@ from astroquery.nist import Nist
 import astropy.units as u
 
 # MATPLOTLIB SUPPORTED COLORS
-COLORS = ['r', 'y', 'silver', 'palegreen', 'slateblue', 'mistyrose', 'c', 'orange']
+COLORS = ['r', 'slateblue', 'c', 'orange', 'green', 'violet']
 
 WAVELENGTH_GROUPING = 0.005
 
@@ -128,8 +128,8 @@ def fetchData(lowerbound, upperbound, element, field):
     # USING ONLY OBSERVED VALUES
     for i in range(len(table)):
         
-        # prevent if there are no observed values
-        if table[i][field] != '--':
+        # prevent if there are no values
+        if table[i][field] != '--' and not '+' in str(table[i][field]):
             x.append(round(float(table[i][field])/1000, 3))
             y.append(1)
     
@@ -205,9 +205,9 @@ def plotClean(x, y, target_molecules=[], min_wl=0, max_wl=0):
     # Paper-proof the graph
     ax1.set_title(f"Processed Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers, grouped by every {WAVELENGTH_GROUPING} micrometer")
     ax1.set_xlabel("Wavelength (micrometers)", loc='center')
-    ax1.set_ylabel("Transit Depth (%)", loc='center')
+    ax1.set_ylabel("Transit Depth (%) (transmission spectra)", loc='center')
     ax1.legend()
-    ax2.set_ylabel("atomic spectra")
+    ax2.set_ylabel("relative frequency (atomic spectra)")
     ax2.legend()
 
     # show graph
@@ -224,8 +224,13 @@ def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
     # plotting
-    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, ["H"], min_val, max_val)
-    plotClean(x_vals, y_vals, ["H"], min_val, max_val)
+    elements = ["Na", "H"]
+    
+
+    # plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, elements, min_val, max_val)
+    plotClean(x_vals, y_vals, elements, min_val, max_val)
+    # plotClean(x_vals, y_vals, ["H"], min_val, max_val)
+
 
     plt.show()
 

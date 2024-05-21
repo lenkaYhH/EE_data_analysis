@@ -13,7 +13,7 @@ def fetchData(lowerbound, upperbound, element):
     return table
 
 def main():
-    t = fetchData(0.4, 0.7, "Na")
+    t = fetchData(0.4, 0.7, "H2O")
     print(t)
 
 if __name__ == "__main__":
