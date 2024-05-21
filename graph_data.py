@@ -59,7 +59,7 @@ def sortPlotCleanData(x, y, option):
     """
     Takes the sorted data from sortData()
 
-    option determins whether the y value is an accumulation or an average
+    option determins whether the y value is an accumulation (s) or an average (a)
 
     Returns two lists (list of x values) (list of corresponding y values) that are grouped by wavelength range specified in global WAVELENGTH_GROUPING
     """
