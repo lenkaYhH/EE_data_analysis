@@ -7,6 +7,9 @@ COLORS = ['r', 'slateblue', 'c', 'orange', 'green', 'violet']
 
 WAVELENGTH_GROUPING = 0.005
 
+# special molecules
+SPECIAL_MOLECULES = ["H2O"]
+
 def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
     """
     Inputs min-max wavelength range, in microns, to visualize (if any boundaries) and return x-y pofloats, 1D x-error bar values and 2D y-error bar values
@@ -109,31 +112,43 @@ def sortPlotCleanData(x, y, option):
 
     return x_plot, y_plot
 
-def fetchData(lowerbound, upperbound, element, field):
+def fetchData(lowerbound, upperbound, molec, field):
     """
     Enter the lowerbound (in nm) and upperbound in nm
     Returns a list of x values in micrometers; y=[1,1,1,...]'
     """
 
     print("\nFETCHING MOLECULAR LINES DATA...")
-    print(f"    currently fetching data for {element}  between {lowerbound} and  {upperbound}")
+    print(f"    currently fetching data for {molec}  between {lowerbound} and  {upperbound}")
 
     x = list()
     y = list()
 
-    # bounds 
-    table = Nist.query(lowerbound *u.nm, upperbound * u.nm, linename=element, wavelength_type="vacuum")
-    # print(table)
-    
-    # USING ONLY OBSERVED VALUES
-    for i in range(len(table)):
+    if not molec in SPECIAL_MOLECULES:
+
+        # bounds 
+        table = Nist.query(lowerbound *u.nm, upperbound * u.nm, linename=molec, wavelength_type="vacuum")
+        # print(table)
         
-        # prevent if there are no values
-        if table[i][field] != '--' and not '+' in str(table[i][field]):
-            x.append(round(float(table[i][field])/1000, 3))
-            y.append(1)
+        # USING ONLY OBSERVED VALUES
+        for i in range(len(table)):
+            
+            # prevent if there are no values
+            if table[i][field] != '--' and not '+' in str(table[i][field]):
+                x.append(round(float(table[i][field])/1000, 3))
+                y.append(1)
+        
+        return x, y
+    
+    # else:
+
+    #     # retrieving for water
+
+    #     if molec == "H2O":
+
     
     return x, y
+
 
 def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
 
