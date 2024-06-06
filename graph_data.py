@@ -239,12 +239,12 @@ def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
     # plotting
-    elements = ["Na", "H"]
+    elements = ["H"]
     
 
     # plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, elements, min_val, max_val)
     plotClean(x_vals, y_vals, elements, min_val, max_val)
-    # plotClean(x_vals, y_vals, ["H"], min_val, max_val)
+    # plotClean(x_vals, y_vals, ["Na"], min_val, max_val)
 
 
     plt.show()

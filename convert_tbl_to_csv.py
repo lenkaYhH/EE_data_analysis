@@ -3,7 +3,15 @@ import os
 
 COLUMN_LABELS = ["CENTRALWAVELNG", "BANDWIDTH", "PL_TRANDEP", "PL_TRANDEPERR1", "PL_TRANDEPERR2", "PL_TRANDEPLIM", "PL_TRANDEP_AUTHORS", "PL_TRANDEP_URL", "PL_RATROR", "PL_RATRORERR1", "PL_RATRORERR2", "PL_RATRORLIM", "PL_RATROR_AUTHORS", "PL_RATROR_URL", "PL_RADJ", "PL_RADJERR1", "PL_RADJERR2", "PL_RADJLIM", "PL_RADJ_AUTHORS", "PL_RADJ_URL", "PL_TRANMID", "PL_TRANMIDERR1", "PL_TRANMIDERR2", "PL_TRANMIDLIM", "ST_RAD", "ST_RADERR1", "ST_RADERR2", "ST_RAD_AUTHORS", "ST_RAD_URL"]
 
-COMMON_CSV_PATH = './clean_csv/all_data.csv'
+# FOR ALL 1600 DATAPOINTS -----------------------------------------
+# COMMON_CSV_PATH = './clean_csv/all_data.csv'
+# FILE_DETAILS_PATH = './clean_csv/file_details.txt'
+# TARGET_DIR = './WASP-39b Data/'
+
+# FOR ONE FILE ONLY
+COMMON_CSV_PATH = './clean_csv/one_file.csv'
+FILE_DETAILS_PATH = './clean_csv/one_file_detail.txt'
+TARGET_DIR = './WASP-39b_to_analyze/'
 
 class File:
     def __init__(self, path, start_index, end_index, info):
@@ -90,15 +98,16 @@ def reformat_data(file_name):
     return INFO, DATA
 
 def main():
+
     # CLEARING COMMON CSV FILE
     f = open(COMMON_CSV_PATH, 'w+')
     f.close()
 
     # CLEARING COMMON TEXT FILE
-    f = open('./clean_csv/file_details.txt', 'w+')
+    f = open(FILE_DETAILS_PATH, 'w+')
     f.close()
 
-    with open(COMMON_CSV_PATH, 'w', newline='') as csvfile, open('./clean_csv/file_details.txt', 'a') as details_file:
+    with open(COMMON_CSV_PATH, 'w', newline='') as csvfile, open(FILE_DETAILS_PATH, 'a') as details_file:
         CSVwriter = csv.writer(csvfile)
 
         # WRITING HEADINGS INTO COMMON CSV FILE
@@ -108,11 +117,11 @@ def main():
         row_counter = 2
 
         # GOING THROUGH EACH RAW DATA FILE
-        for j, filename in enumerate(os.listdir('./WASP-39b Data')):
+        for j, filename in enumerate(os.listdir(TARGET_DIR)):
             print(f"ON FILE NUMBER {j}")
             print(f"    Reformatting data...")
 
-            i, d = reformat_data(f"./WASP-39b Data/{filename}")
+            i, d = reformat_data(f"{TARGET_DIR}{filename}")
 
             print("    Data Reformatted")
 
@@ -131,6 +140,8 @@ def main():
 
             # UPDATE ROW COUNTER
             row_counter += len(d)
+
+    
 
 if __name__ == "__main__":
     main()
