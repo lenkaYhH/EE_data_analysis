@@ -1,11 +1,20 @@
 import matplotlib.pyplot as plt
 from astroquery.nist import Nist
 import astropy.units as u
+import math
 
 # MATPLOTLIB SUPPORTED COLORS
 COLORS = ['r', 'slateblue', 'c', 'orange', 'green', 'violet']
 
+# in micrometers
 WAVELENGTH_GROUPING = 0.005
+
+# for all 1600 datapoints
+DATA_FILE = "./clean_csv/all_data.csv"
+
+# for only one file
+DATA_FILE = "./clean_csv/one_file.csv"
+FILE_NUM = 4988.1
 
 # special molecules
 SPECIAL_MOLECULES = ["H2O"]
@@ -22,7 +31,7 @@ def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
     # first list is the minimum and second list is maximum
     y_errorbars = [[], []]
 
-    with open("./clean_csv/all_data.csv", "r") as f:
+    with open(DATA_FILE, "r") as f:
         lines = f.readlines()
 
         for l in lines[1:]:
@@ -149,10 +158,10 @@ def fetchData(lowerbound, upperbound, molec, field):
     
     return x, y
 
+def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
 
-def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=5):
-
-    LOWERBOUND = min(x_vals)
+    LOWERBOUND = math.floor(min(x_vals))
+    UPPERBOUND = math.ceil(max(x_vals))
 
     # Initialize Graph
     fig_raw = plt.figure()
@@ -169,7 +178,7 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=
 
         print(f"\nCONDUCTING MOLECULAR ANALYSIS for {molec}")
 
-        x_vals, y = fetchData(min_wl*1000, max_wl*1000, molec, "Ritz")
+        x_vals, y = fetchData(LOWERBOUND*1000, UPPERBOUND*1000, molec, "Ritz")
         print(f"    data fetched...")
         
         for j in range(len(x_vals)):
@@ -180,12 +189,12 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[], min_wl=0, max_wl=
     # Paper-proof the graph
     ax.set_xlabel("Wavelength (micrometers)", loc='center')
     ax.set_ylabel("Transit Depth (%)", loc='center')
-    ax.set_title(f"Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers")
+    ax.set_title(f"Transmission Spectrum of WASP-39b from {LOWERBOUND} to {UPPERBOUND} micrometers")
 
     fig_raw.tight_layout()
     plt.plot()
 
-def plotClean(x, y, target_molecules=[], min_wl=0, max_wl=0):
+def plotClean(x, y, target_molecules=[]):
     """
     Takes in raw x and y values, cleans up the values and plots it
 
@@ -201,6 +210,9 @@ def plotClean(x, y, target_molecules=[], min_wl=0, max_wl=0):
 
     # DATA CLEANING -----------------------------------
     x, y = sortPlotCleanData(x, y, 'a')
+
+    min_wl = math.floor(min(x))
+    max_wl = math.ceil(max(x))
 
     ax1.errorbar(x, y, marker='.', ls='none')
     # ax1.errorbar(x, y, marker='.')
@@ -218,7 +230,7 @@ def plotClean(x, y, target_molecules=[], min_wl=0, max_wl=0):
         ax2.plot(x, y, marker='.', color=COLORS[i], label=molec)
 
     # Paper-proof the graph
-    ax1.set_title(f"Processed Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers, grouped by every {WAVELENGTH_GROUPING} micrometer")
+    ax1.set_title(f"Processed Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers, file name {FILE_NUM}")
     ax1.set_xlabel("Wavelength (micrometers)", loc='center')
     ax1.set_ylabel("Transit Depth (%) (transmission spectra)", loc='center')
     ax1.legend()
@@ -239,12 +251,11 @@ def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
     # plotting
-    elements = ["H"]
+    elements = []
     
-
-    # plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, elements, min_val, max_val)
-    plotClean(x_vals, y_vals, elements, min_val, max_val)
-    # plotClean(x_vals, y_vals, ["Na"], min_val, max_val)
+    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, elements)
+    # plotClean(x_vals, y_vals, elements)
+    # plotClean(x_vals, y_vals, ["Na"])
 
 
     plt.show()

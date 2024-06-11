@@ -1,0 +1,16 @@
+
+        ----------------------------------------------------------------------
+        FILE DETAILS FOR: WASP_39_b_3.11466_4988_1.tbl 
+            Planet Name: WASP-39 b
+            Spectrum Type: Transmission
+            Instrument: Near Infrared Spectrograph (NIRSpec)
+            Facility: NASA 6.5m James Webb Space Telescope (JWST) Satellite Mission
+            Note: Eureka! pipeline
+            Reference: JWST Transiting Exoplanet Community ERS Team 2022
+
+            DATA STORAGE DETAILS:
+            In clean_csv > all_data.csv
+            Index 2 to and not including index 96
+        ----------------------------------------------------------------------
+
+            
