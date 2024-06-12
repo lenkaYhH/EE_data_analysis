@@ -121,7 +121,7 @@ def sortPlotCleanData(x, y, option):
 
     return x_plot, y_plot
 
-def fetchData(lowerbound, upperbound, molec, field):
+def fetchElementData(lowerbound, upperbound, molec, field):
     """
     Enter the lowerbound (in nm) and upperbound in nm
     Returns a list of x values in micrometers; y=[1,1,1,...]'
@@ -178,7 +178,7 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
 
         print(f"\nCONDUCTING MOLECULAR ANALYSIS for {molec}")
 
-        x_vals, y = fetchData(LOWERBOUND*1000, UPPERBOUND*1000, molec, "Ritz")
+        x_vals, y = fetchElementData(LOWERBOUND*1000, UPPERBOUND*1000, molec, "Ritz")
         print(f"    data fetched...")
         
         for j in range(len(x_vals)):
@@ -221,7 +221,7 @@ def plotClean(x, y, target_molecules=[]):
 
     # queries for database info
     for i, molec in enumerate(target_molecules):
-        x, y = fetchData(min_wl*1000, max_wl*1000, molec, "Ritz")
+        x, y = fetchElementData(min_wl*1000, max_wl*1000, molec, "Ritz")
 
         x, y = sortPlotCleanData(x, y, 's')
 
