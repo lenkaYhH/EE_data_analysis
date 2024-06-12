@@ -1,5 +1,6 @@
 from astroquery.nist import Nist
 import astropy.units as u
+from hapi import *
 
 def fetchData(lowerbound, upperbound, element):
     """
