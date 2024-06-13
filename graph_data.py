@@ -158,6 +158,36 @@ def fetchElementData(lowerbound, upperbound, molec, field):
     
     return x, y
 
+def fetchMolecularData(file_name, factor):
+    """
+    given a txt file that per line follows the following format:
+    wavenumber(cm^-1) intensities cm^-1/(molecule cm^-2)
+
+    read from the file and returns a list of x values (wavelength in micrometers) and list of y values (intensity)
+    """
+
+    wavenumbers = list()
+    wavelength = list()
+    relative_intensities = list()
+
+    with open(file_name, 'r') as f:
+        lines = f.readlines()
+
+        for l in lines:
+            w, i = l.split(" ")
+            
+            # wavenumbers in cm^-1
+            wavenumbers.append(float(w))
+
+            # wavelength in micrometers
+            wavelength.append(1/(float(w))*10e4)
+
+            # relative_intensities.append(float(i)/factor)
+            relative_intensities.append(float(i))
+
+
+    return wavelength, 
+
 def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
 
     LOWERBOUND = math.floor(min(x_vals))
