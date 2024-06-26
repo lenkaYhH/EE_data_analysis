@@ -17,7 +17,7 @@ DATA_FILE = "./clean_csv/one_file.csv"
 FILE_NUM = 4988.1
 
 # special molecules
-SPECIAL_MOLECULES = ["H2O"]
+SPECIAL_MOLECULES = ["H2O", "CO2"]
 
 def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
     """
@@ -180,7 +180,7 @@ def fetchMolecularData(file_name):
             wavenumbers.append(float(w))
 
             # wavelength in micrometers
-            wavelength.append(1/(float(w))*10e4)
+            wavelength.append(1/(float(w))*1e4)
 
             # relative_intensities.append(float(i)/factor)
             relative_intensities.append(float(i))
@@ -209,6 +209,7 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
 
         if molec in SPECIAL_MOLECULES:
             x, y = fetchMolecularData(f"./hitran_data/{molec}.txt")
+
             ax2.errorbar(x, y, marker='.', color=COLORS[i], label=molec, ls='none')
 
         else: 
@@ -298,7 +299,7 @@ def main():
     # plotting
     elements = []
     
-    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, ["H2O"])
+    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, ["H2O", "CO2"])
     # plotClean(x_vals, y_vals, elements)
     # plotClean(x_vals, y_vals, ["Na"])
 

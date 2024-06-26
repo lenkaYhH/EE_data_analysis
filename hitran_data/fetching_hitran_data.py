@@ -2,7 +2,7 @@ from hapi import *
 import matplotlib.pyplot as plt
 
 def convertMicroToFreq(lambda_micro):
-    return int(10e4/lambda_micro)
+    return int(1e4/lambda_micro)
 
 def fetchHitran():
     """
@@ -11,15 +11,21 @@ def fetchHitran():
 
     # HITRAN_ids = ["H2O","CO2","O3"," N2O","CO","CH4","O2","NO","SO2","NO2","NH3","HNO3","OH","HF","HCl","HBr","HI","ClO","OCS"," H2CO"," HOCl"," N2"," HCN"," CH3Cl"," H2O2"," C2H2"," C2H6"," PH3"," COF2"," SF6"," H2S"," HCOOH"," HO2"," O"," ClONO2"," NO+"," HOBr"," C2H4"," CH3OH"," CH3Br"," CH3CN"," CF4"," C4H2"," HC3N"," H2"," CS"," SO3"," C2N2"," COCl2"," SO"," CH3F"," GeH4"," CS2"," CH3I"," NF3"]
 
+    db_begin("data")
 
-    db_begin()
+    # fetch("CO2", 2, 1, convertMicroToFreq(5), convertMicroToFreq(3))
 
-    fetch("CO2", 2, 1, convertMicroToFreq(5), convertMicroToFreq(3))
+    fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(5), convertMicroToFreq(3))
+    select("H2O",ParameterNames=('nu',"sw"), File="H2O.txt")
 
-    # fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(5), convertMicroToFreq(3))
-    # fetch_by_ids("CO2", [7, 8, 9], convertMicroToFreq(5), convertMicroToFreq(3))
-    # fetch_by_ids("CO", [26, 27, 28], convertMicroToFreq(5), convertMicroToFreq(3))
-    # fetch_by_ids("CH4", [32, 33, 34], convertMicroToFreq(5), convertMicroToFreq(3))
+    fetch_by_ids("CO2", [7, 8, 9], convertMicroToFreq(5), convertMicroToFreq(3))
+    select("CO2",ParameterNames=('nu',"sw"), File="CO2.txt")
+
+    fetch_by_ids("CO", [26, 27, 28], convertMicroToFreq(5), convertMicroToFreq(3))
+    select("CO",ParameterNames=('nu',"sw"), File="CO.txt")
+    
+    fetch_by_ids("CH4", [32, 33, 34], convertMicroToFreq(5), convertMicroToFreq(3))
+    select("CH4",ParameterNames=('nu',"sw"), File="CH4.txt")
 
 def processHitran(file_name, factor):
 
@@ -62,18 +68,15 @@ def convertManual(start_file, dest_file):
             writefile.write(" ".join(l.split(" ")[2:4])+'\n')
 
 def main():
-    # fetchHitran()
+    fetchHitran()
     # getHelp(fetch_by_ids)
     # getHelp(iso_id)
 
     # fetch_by_ids("test", [3, 4, 5], convertMicroToFreq(5), convertMicroToFreq(3))
-    
-    # nu, sw = getColumns("H2O", ['nu', 'sw'])
-    # select("H2O",ParameterNames=('nu',"sw"), File="H2O.txt")
 
     # processHitran("./H2O.txt", 0.9973)
 
-    convertManual("./CO2.data", "./CO2.txt")
+    # convertManual("./CO2.data", "./CO2.txt")
   
 
 if __name__ == "__main__":
