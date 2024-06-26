@@ -2,7 +2,7 @@ from hapi import *
 import matplotlib.pyplot as plt
 
 def convertMicroToFreq(lambda_micro):
-    return 10e4/lambda_micro
+    return int(10e4/lambda_micro)
 
 def fetchHitran():
     """
@@ -14,15 +14,12 @@ def fetchHitran():
 
     db_begin()
 
-    # fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(5), 50000)
-    # fetch_by_ids("CO2", [7, 8, 9], convertMicroToFreq(5), 50000)
-    # fetch_by_ids("CO", [26, 27, 28], convertMicroToFreq(5), 50000)
-    # fetch_by_ids("CH4", [32, 33, 34], convertMicroToFreq(5), 50000)
+    fetch("CO2", 2, 1, convertMicroToFreq(5), convertMicroToFreq(3))
 
-    fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(5), convertMicroToFreq(3))
-    fetch_by_ids("CO2", [7, 8, 9], convertMicroToFreq(5), convertMicroToFreq(3))
-    fetch_by_ids("CO", [26, 27, 28], convertMicroToFreq(5), convertMicroToFreq(3))
-    fetch_by_ids("CH4", [32, 33, 34], convertMicroToFreq(5), convertMicroToFreq(3))
+    # fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(5), convertMicroToFreq(3))
+    # fetch_by_ids("CO2", [7, 8, 9], convertMicroToFreq(5), convertMicroToFreq(3))
+    # fetch_by_ids("CO", [26, 27, 28], convertMicroToFreq(5), convertMicroToFreq(3))
+    # fetch_by_ids("CH4", [32, 33, 34], convertMicroToFreq(5), convertMicroToFreq(3))
 
 def processHitran(file_name, factor):
 
@@ -56,16 +53,28 @@ def processHitran(file_name, factor):
     plt.errorbar(wavelength, relative_intensities, marker='.', ls='none')
     plt.show()
 
+def convertManual(start_file, dest_file):
+    
+    with open(start_file, 'r') as readfile, open(dest_file, 'w+') as writefile:
+        lines = readfile.readlines()
+
+        for l in lines:
+            writefile.write(" ".join(l.split(" ")[2:4])+'\n')
+
 def main():
     # fetchHitran()
+    # getHelp(fetch_by_ids)
+    # getHelp(iso_id)
 
-    fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(5), convertMicroToFreq(3))
+    # fetch_by_ids("test", [3, 4, 5], convertMicroToFreq(5), convertMicroToFreq(3))
     
     # nu, sw = getColumns("H2O", ['nu', 'sw'])
-    select("H2O",ParameterNames=('nu',"sw"), File="H2O.txt")
+    # select("H2O",ParameterNames=('nu',"sw"), File="H2O.txt")
 
-    processHitran("./H2O.txt", 0.9973)
-    
+    # processHitran("./H2O.txt", 0.9973)
+
+    convertManual("./CO2.data", "./CO2.txt")
+  
 
 if __name__ == "__main__":
     main()

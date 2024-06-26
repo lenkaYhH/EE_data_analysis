@@ -158,7 +158,7 @@ def fetchElementData(lowerbound, upperbound, molec, field):
     
     return x, y
 
-def fetchMolecularData(file_name, factor):
+def fetchMolecularData(file_name):
     """
     given a txt file that per line follows the following format:
     wavenumber(cm^-1) intensities cm^-1/(molecule cm^-2)
@@ -186,7 +186,7 @@ def fetchMolecularData(file_name, factor):
             relative_intensities.append(float(i))
 
 
-    return wavelength, 
+    return wavelength, relative_intensities
 
 def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
 
@@ -196,6 +196,7 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
     # Initialize Graph
     fig_raw = plt.figure()
     ax = fig_raw.add_subplot()
+    ax2 = ax.twinx()
 
     # Plots Normal Data
     ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, fmt='.', ls='none')
@@ -206,20 +207,28 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
     # Fetch atomic data + graph
     for i, molec in enumerate(target_molecules):
 
-        print(f"\nCONDUCTING MOLECULAR ANALYSIS for {molec}")
+        if molec in SPECIAL_MOLECULES:
+            x, y = fetchMolecularData(f"./hitran_data/{molec}.txt")
+            ax2.errorbar(x, y, marker='.', color=COLORS[i], label=molec, ls='none')
 
-        x_vals, y = fetchElementData(LOWERBOUND*1000, UPPERBOUND*1000, molec, "Ritz")
-        print(f"    data fetched...")
-        
-        for j in range(len(x_vals)):
-            if x_vals[j] >= LOWERBOUND:
-                ax.axvspan(x_vals[j], x_vals[j]+0.001, alpha=0.25, color=COLORS[i])
+        else: 
+            print(f"\nCONDUCTING MOLECULAR ANALYSIS for {molec}")
+
+            x_vals, y = fetchElementData(LOWERBOUND*1000, UPPERBOUND*1000, molec, "Ritz")
+            print(f"    data fetched...")
+            
+            for j in range(len(x_vals)):
+                if x_vals[j] >= LOWERBOUND:
+                    ax.axvspan(x_vals[j], x_vals[j]+0.001, alpha=0.25, color=COLORS[i])
 
         
     # Paper-proof the graph
     ax.set_xlabel("Wavelength (micrometers)", loc='center')
     ax.set_ylabel("Transit Depth (%)", loc='center')
     ax.set_title(f"Transmission Spectrum of WASP-39b from {LOWERBOUND} to {UPPERBOUND} micrometers")
+
+    ax2.set_ylabel("relative frequency (atomic spectra)")
+    ax2.legend()
 
     fig_raw.tight_layout()
     plt.plot()
@@ -251,13 +260,19 @@ def plotClean(x, y, target_molecules=[]):
 
     # queries for database info
     for i, molec in enumerate(target_molecules):
-        x, y = fetchElementData(min_wl*1000, max_wl*1000, molec, "Ritz")
 
-        x, y = sortPlotCleanData(x, y, 's')
+        if molec in SPECIAL_MOLECULES:
+            x, y = fetchMolecularData(f"./hitran_data/{molec}.txt")
 
-        # plot molecular data
-        # ax2.plot(x, y, marker='.', ls='none', color=COLORS[i], label=molec)
-        ax2.plot(x, y, marker='.', color=COLORS[i], label=molec)
+        else:
+            x, y = fetchElementData(min_wl*1000, max_wl*1000, molec, "Ritz")
+
+            x, y = sortPlotCleanData(x, y, 's')
+
+            # plot molecular data
+            # ax2.plot(x, y, marker='.', ls='none', color=COLORS[i], label=molec)
+
+        ax2.errorbar(x, y, marker='.', color=COLORS[i], label=molec, ls='none')
 
     # Paper-proof the graph
     ax1.set_title(f"Processed Transmission Spectrum of WASP-39b from {min_wl} to {max_wl} micrometers, file name {FILE_NUM}")
@@ -283,9 +298,11 @@ def main():
     # plotting
     elements = []
     
-    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, elements)
+    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, ["H2O"])
     # plotClean(x_vals, y_vals, elements)
     # plotClean(x_vals, y_vals, ["Na"])
+
+    # plotClean(x_vals, y_vals, ["H2O"])
 
 
     plt.show()
