@@ -156,15 +156,7 @@ def fetchElementData(lowerbound, upperbound, molec, field):
                 x.append(round(float(table[i][field])/1000, 3))
                 y.append(1)
         
-        return x, y
-    
-    # else:
-
-    #     # retrieving for water
-
-    #     if molec == "H2O":
-
-    
+        return x, y    
     return x, y
 
 def fetchMolecularData(file_name, molec):
@@ -183,16 +175,28 @@ def fetchMolecularData(file_name, molec):
         lines = f.readlines()
 
         for l in lines:
+            # try:
+            #     w, i = l.split(" ")[1:]
+            # except:
+            #     print(molec)
+            #     print(l.split(" ")[1:])
+            #     break
             w, i = l.split(" ")[1:]
             
-            # wavenumbers in cm^-1
-            wavenumbers.append(float(w))
+            # removing points that have very minor intensities (TODO: ADJUST BASED ON MEASUREMENT INACCURACY IN HITRAN)
+            if float(i) > 1e-24:
+                # wavenumbers in cm^-1
+                wavenumbers.append(float(w))
 
-            # wavelength in micrometers
-            wavelength.append(1/(float(w))*1e4)
+                # wavelength in micrometers
+                wavelength.append(1/(float(w))*1e4)
 
-            # relative_intensities.append(float(i)/ABUNDANCES[molec])
-            relative_intensities.append(float(i))
+                # relative_intensities.append(float(i)/ABUNDANCES[molec])
+                relative_intensities.append(float(i))
+
+    # normalizing everything to 1
+    max_val = max(relative_intensities)
+    relative_intensities = list(map(lambda x: x/max_val, relative_intensities))
 
     return wavelength, relative_intensities
 
@@ -305,7 +309,8 @@ def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
     # plotting
-    to_plot = ["H2O", "CO2", "CO", "CH4"]
+    # to_plot = ["H2O", "CO2", "CO", "CH4"]
+    to_plot = ["H2O", "CO2", "CO"]
 
     # for a in to_plot:
     #     plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, [a])

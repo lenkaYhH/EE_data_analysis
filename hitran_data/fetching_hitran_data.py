@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def convertMicroToFreq(lambda_micro):
     return int(1e4/lambda_micro)
 
-def fetchHitran():
+def fetchHitran(min_w=3, max_w=5):
     """
     fetches molecular data for first 3 prominent isotopes of H2O, CO2 CH4 and CO
     """
@@ -15,16 +15,16 @@ def fetchHitran():
 
     # fetch("CO2", 2, 1, convertMicroToFreq(5), convertMicroToFreq(3))
 
-    fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(5), convertMicroToFreq(3))
+    fetch_by_ids("H2O", [1, 2, 3], convertMicroToFreq(max_w), convertMicroToFreq(min_w))
     select("H2O",ParameterNames=('nu',"sw"), File="H2O.txt")
 
-    fetch_by_ids("CO2", [7, 8, 9], convertMicroToFreq(5), convertMicroToFreq(3))
+    fetch_by_ids("CO2", [7, 8, 9], convertMicroToFreq(max_w), convertMicroToFreq(min_w))
     select("CO2",ParameterNames=('nu',"sw"), File="CO2.txt")
 
-    fetch_by_ids("CO", [26, 27, 28], convertMicroToFreq(5), convertMicroToFreq(3))
+    fetch_by_ids("CO", [26, 27, 28], convertMicroToFreq(max_w), convertMicroToFreq(min_w))
     select("CO",ParameterNames=('nu',"sw"), File="CO.txt")
     
-    fetch_by_ids("CH4", [32, 33, 34], convertMicroToFreq(5), convertMicroToFreq(3))
+    fetch_by_ids("CH4", [32, 33, 34], convertMicroToFreq(max_w), convertMicroToFreq(min_w))
     select("CH4",ParameterNames=('nu',"sw"), File="CH4.txt")
 
 def processHitran(file_name, factor):
