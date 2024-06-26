@@ -4,7 +4,7 @@ import astropy.units as u
 import math
 
 # MATPLOTLIB SUPPORTED COLORS
-COLORS = ['r', 'slateblue', 'c', 'orange', 'green', 'violet']
+COLORS = ['r', 'forestgreen', 'darkorange', 'dodgerblue']
 
 # in micrometers
 WAVELENGTH_GROUPING = 0.005
@@ -17,7 +17,16 @@ DATA_FILE = "./clean_csv/one_file.csv"
 FILE_NUM = 4988.1
 
 # special molecules
-SPECIAL_MOLECULES = ["H2O", "CO2"]
+SPECIAL_MOLECULES = ["H2O", "CO2", "CO", "CH4"]
+
+# abundances from hitran's isotopogue
+ABUNDANCES  = {
+    "H2O": 0.9973,
+    "CO2": 0.9842,
+    "CO": 0.9865,
+    "CH4": 0.98827
+}
+
 
 def sortData(min_wl=0, max_wl=10, remove_odd_points=True):
     """
@@ -158,12 +167,12 @@ def fetchElementData(lowerbound, upperbound, molec, field):
     
     return x, y
 
-def fetchMolecularData(file_name):
+def fetchMolecularData(file_name, molec):
     """
     given a txt file that per line follows the following format:
     wavenumber(cm^-1) intensities cm^-1/(molecule cm^-2)
 
-    read from the file and returns a list of x values (wavelength in micrometers) and list of y values (intensity)
+    read from the file and returns a list of x values (wavelength in micrometers) and list of y values (intensity, adjusted for abundance)
     """
 
     wavenumbers = list()
@@ -174,7 +183,7 @@ def fetchMolecularData(file_name):
         lines = f.readlines()
 
         for l in lines:
-            w, i = l.split(" ")
+            w, i = l.split(" ")[1:]
             
             # wavenumbers in cm^-1
             wavenumbers.append(float(w))
@@ -182,9 +191,8 @@ def fetchMolecularData(file_name):
             # wavelength in micrometers
             wavelength.append(1/(float(w))*1e4)
 
-            # relative_intensities.append(float(i)/factor)
+            # relative_intensities.append(float(i)/ABUNDANCES[molec])
             relative_intensities.append(float(i))
-
 
     return wavelength, relative_intensities
 
@@ -208,9 +216,9 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
     for i, molec in enumerate(target_molecules):
 
         if molec in SPECIAL_MOLECULES:
-            x, y = fetchMolecularData(f"./hitran_data/{molec}.txt")
+            x, y = fetchMolecularData(f"./hitran_data/{molec}.txt", molec)
 
-            ax2.errorbar(x, y, marker='.', color=COLORS[i], label=molec, ls='none')
+            ax2.errorbar(x, y, marker='.', color=COLORS[SPECIAL_MOLECULES.index(molec)], label=molec, ls='none')
 
         else: 
             print(f"\nCONDUCTING MOLECULAR ANALYSIS for {molec}")
@@ -263,7 +271,7 @@ def plotClean(x, y, target_molecules=[]):
     for i, molec in enumerate(target_molecules):
 
         if molec in SPECIAL_MOLECULES:
-            x, y = fetchMolecularData(f"./hitran_data/{molec}.txt")
+            x, y = fetchMolecularData(f"./hitran_data/{molec}.txt", molec)
 
         else:
             x, y = fetchElementData(min_wl*1000, max_wl*1000, molec, "Ritz")
@@ -297,9 +305,13 @@ def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
     # plotting
-    elements = []
+    to_plot = ["H2O", "CO2", "CO", "CH4"]
+
+    # for a in to_plot:
+    #     plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, [a])
     
-    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, ["H2O", "CO2"])
+    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, to_plot)
+
     # plotClean(x_vals, y_vals, elements)
     # plotClean(x_vals, y_vals, ["Na"])
 
