@@ -195,8 +195,8 @@ def fetchMolecularData(file_name, molec):
                 relative_intensities.append(float(i))
 
     # normalizing everything to 1
-    max_val = max(relative_intensities)
-    relative_intensities = list(map(lambda x: x/max_val, relative_intensities))
+    # max_val = max(relative_intensities)
+    # relative_intensities = list(map(lambda x: x/max_val, relative_intensities))
 
     return wavelength, relative_intensities
 
@@ -208,7 +208,9 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
     # Initialize Graph
     fig_raw = plt.figure()
     ax = fig_raw.add_subplot()
-    ax2 = ax.twinx()
+
+    if len(target_molecules):
+        ax2 = ax.twinx()
 
     # Plots Normal Data
     ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, fmt='.', ls='none')
@@ -240,8 +242,9 @@ def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
     ax.set_ylabel("Transit Depth (%)", loc='center')
     ax.set_title(f"Transmission Spectrum of WASP-39b from {LOWERBOUND} to {UPPERBOUND} micrometers")
 
-    ax2.set_ylabel("relative frequency (atomic spectra)")
-    ax2.legend()
+    if len(target_molecules):
+        ax2.set_ylabel("relative intensity of molecular spectra")
+        ax2.legend()
 
     fig_raw.tight_layout()
     plt.plot()
@@ -309,13 +312,14 @@ def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
     # plotting
-    # to_plot = ["H2O", "CO2", "CO", "CH4"]
-    to_plot = ["H2O", "CO2", "CO"]
+    to_plot = ["H2O", "CO2", "CO", "CH4"]
+    # to_plot = ["H2O", "CO2", "CO"]
 
-    # for a in to_plot:
-    #     plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, [a])
+    for a in to_plot:
+        plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, [a])
     
     plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, to_plot)
+    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars)
 
     # plotClean(x_vals, y_vals, elements)
     # plotClean(x_vals, y_vals, ["Na"])
