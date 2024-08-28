@@ -12,6 +12,7 @@ COLUMN_LABELS = ["CENTRALWAVELNG", "BANDWIDTH", "PL_TRANDEP", "PL_TRANDEPERR1", 
 COMMON_CSV_PATH = './clean_csv/one_file.csv'
 FILE_DETAILS_PATH = './clean_csv/one_file_detail.txt'
 TARGET_DIR = './WASP-39b_to_analyze/'
+TAUREX_DATA = './TAUREX/WASP39b.dat'
 
 class File:
     def __init__(self, path, start_index, end_index, info):
@@ -52,7 +53,7 @@ class File:
         for i, label in enumerate(info_labels):
             self.specs[label] = info[i]
     
-def reformat_data(file_name):
+def reformat_data_old(file_name):
     """
     Reads the raw tbl files and processes the raw values data
     :param file_name:
@@ -97,6 +98,30 @@ def reformat_data(file_name):
 
     return INFO, DATA
 
+def reformat_data_new(file_name):
+    """given file name, writes data to WASP39b.dat (without column headers)
+
+    3 column cell ASCII
+    wavelength  depth  error  width
+    """
+    INFO = list()
+    DATA = list()
+
+    with open(f"./WASP-39b_to_analyze/{file_name}", 'r') as data_file, open(TAUREX_DATA, 'a') as taurex_data:
+        all_lines = data_file.readlines()
+        # print(len(all_lines))
+
+        for line in all_lines:
+            # Append only data
+            if line[0] != "\\" and line[0] != "|":
+                # print(line)
+                items = line.split(" ")
+                items = [x.strip() for x in items if len(x.strip())]
+
+                taurex_data.write(f"{items[0]}  {items[2]}  {round((abs(float(items[3])) + abs(float(items[4])))/2, 5)}\n")
+
+    return INFO, DATA
+
 def main():
 
     # CLEARING COMMON CSV FILE
@@ -105,6 +130,10 @@ def main():
 
     # CLEARING COMMON TEXT FILE
     f = open(FILE_DETAILS_PATH, 'w+')
+    f.close()
+
+    # for data file
+    f = open(TAUREX_DATA, 'w+')
     f.close()
 
     with open(COMMON_CSV_PATH, 'w', newline='') as csvfile, open(FILE_DETAILS_PATH, 'a') as details_file:
@@ -121,7 +150,7 @@ def main():
             print(f"ON FILE NUMBER {j}")
             print(f"    Reformatting data...")
 
-            i, d = reformat_data(f"{TARGET_DIR}{filename}")
+            i, d = reformat_data_old(f"{TARGET_DIR}{filename}")
 
             print("    Data Reformatted")
 
@@ -140,6 +169,9 @@ def main():
 
             # UPDATE ROW COUNTER
             row_counter += len(d)
+
+            # reformat data for taurex
+            reformat_data_new(filename)
 
     
 
