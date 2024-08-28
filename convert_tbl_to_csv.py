@@ -12,7 +12,7 @@ COLUMN_LABELS = ["CENTRALWAVELNG", "BANDWIDTH", "PL_TRANDEP", "PL_TRANDEPERR1", 
 COMMON_CSV_PATH = './clean_csv/one_file.csv'
 FILE_DETAILS_PATH = './clean_csv/one_file_detail.txt'
 TARGET_DIR = './WASP-39b_to_analyze/'
-TAUREX_DATA = './TAUREX/WASP39b.dat'
+TAUREX_DATA = './TAUREX/ee/WASP39b.dat'
 
 class File:
     def __init__(self, path, start_index, end_index, info):
