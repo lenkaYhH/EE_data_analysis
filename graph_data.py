@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from astroquery.nist import Nist
 import astropy.units as u
 import math
+from hapi import *
 
 # MATPLOTLIB SUPPORTED COLORS
 COLORS = ['r', 'forestgreen', 'darkorange', 'dodgerblue']
@@ -200,6 +201,11 @@ def fetchMolecularData(file_name, molec):
 
     return wavelength, relative_intensities
 
+def fetchHitran(molecule, global_id, iso_id, min_lambda, max_lambda):
+    """given molecule name, global id, isotope id, min wavelength and max wavelength, fetches the data using fetch"""
+
+    fetch(molecule, global_id, iso_id, 1e4/max_lambda, 1e4/min_lambda)
+    
 def plotRaw(x_vals, y_vals, x_err, y_err, target_molecules=[]):
 
     LOWERBOUND = math.floor(min(x_vals))
@@ -302,6 +308,44 @@ def plotClean(x, y, target_molecules=[]):
     fig_clean.tight_layout()
     plt.plot()
 
+def plotModel(x_vals, y_vals, x_err, y_err, target_molecules=[]):
+    
+    """
+    plots raw data: x, y and error
+    target molcules two dimentional list:
+    [molecule name, global id, isotope id]"""
+
+    LOWERBOUND = math.floor(min(x_vals))
+    UPPERBOUND = math.ceil(max(x_vals))
+
+    # Initialize Graph
+    fig_raw = plt.figure()
+    ax = fig_raw.add_subplot()
+
+    # Plots Normal Data
+    ax.errorbar(x_vals, y_vals, xerr=x_err, yerr=y_err, fmt='.', ls='none')
+
+    # source_tables = list()
+    
+    # fetching hitran for each of the target molecules
+    for molec in target_molecules:
+        ax2 = ax.twinx()
+        # source_tables.append(molec[0])
+
+        # fetches data from hitran
+        fetchHitran(molec[0], molec[1], molec[2], LOWERBOUND, UPPERBOUND)
+
+        # models line broadening
+        nu, coef = absorptionCoefficient_Lorentz(SourceTables=molec[0])
+
+        # converts wavenumbers to wavelengths
+        wv = list(map(lambda x: 1e4/x, nu))
+        ax2.errorbar(wv, coef, color=COLORS[target_molecules.index(molec)])
+    
+    fig_raw.tight_layout()
+    plt.plot()
+
+
 def main():
 
     # TRANSMISSION SPECTRA DATA ANALYSIS -----------------------
@@ -312,17 +356,18 @@ def main():
     x_vals, y_vals, xerr_bars, yerr_bars = sortData(min_val, max_val)
 
     # plotting
-    to_plot = ["H2O", "CO2", "CO", "CH4"]
-    # to_plot = ["H2O", "CO2", "CO"]
+    # to_plot = ["H2O", "CO2", "CO", "CH4"]
+    to_plot = ["H2O", "CO2"]
 
     for a in to_plot:
         plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, [a])
     
-    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, to_plot)
-    plotRaw(x_vals, y_vals, xerr_bars, yerr_bars)
-
+    # plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, to_plot)
+    # plotRaw(x_vals, y_vals, xerr_bars, yerr_bars)
     # plotClean(x_vals, y_vals, elements)
     # plotClean(x_vals, y_vals, ["Na"])
+
+    plotModel(x_vals, y_vals, xerr_bars, yerr_bars, [['CO2', 2, 1], ['H2O', 1, 1]])
 
     # plotClean(x_vals, y_vals, ["H2O"])
 
