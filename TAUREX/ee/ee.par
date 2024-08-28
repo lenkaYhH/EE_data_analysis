@@ -1,0 +1,74 @@
+[Global]
+xsec_path = C:\Users\lenka\OneDrive - Stichting Het Rijnlands Lyceum\DP\EE\EE_data_analysis\TAUREX\Input\xsec\xsec_sampled_R15000_0.3-15
+cia_path = C:\Users\lenka\OneDrive - Stichting Het Rijnlands Lyceum\DP\EE\EE_data_analysis\TAUREX\Input\cia\HITRAN
+
+[Observation]
+observed_spectrum = C:\Users\lenka\OneDrive - Stichting Het Rijnlands Lyceum\DP\EE\EE_data_analysis\TAUREX\ee\WASP39b.dat
+
+[Chemistry]
+chemistry_type = taurex
+fill_gases = H2,He
+#ratio = 4.8962e-2
+
+    [[H2O]]
+    gas_type = constant
+    #mix_ratio=1.1185e-4
+    mix_ratio = 0.5
+
+    [[CO2]]
+    gas_type=constant
+    mix_ratio = 0.5
+    #mix_ratio=1.1185e-4
+
+    #[[N2]]
+    #gas_type = constant
+    #mix_ratio = 3.00739e-9
+
+[Temperature]
+profile_type = isothermal
+T = 900
+
+#[Pressure]
+#profile_type = Simple
+#atm_min_pressure = 1e-0
+#atm_max_pressure = 1e6
+#nlayers = 30
+
+[Planet]
+planet_type = Simple
+planet_mass = 0.28
+planet_radius = 1.27
+planet_distance = 0.0486
+orbital_period = 4.055
+
+#taken from https://science.nasa.gov/exoplanet-catalog/wasp-39-b/
+
+
+[Star]
+star_type = blackbody
+temperature = 5326.6
+radius = 1.0134
+mass = 0.918
+metallicity = -0.030
+
+#taken from https://exoplanetarchive.ipac.caltech.edu/overview/WASP-39
+
+[Model]
+model_type = transmission
+
+    [[Absorption]]
+
+    [[CIA]]
+    cia_pairs = H2-H2,H2-He
+
+    [[Rayleigh]]
+
+    [[SimpleClouds]]
+
+#[Optimizer]
+#optimizer = nestle
+#num_live_points=100
+#method = single
+
+
+
