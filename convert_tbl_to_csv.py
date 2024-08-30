@@ -118,7 +118,7 @@ def reformat_data_new(file_name):
                 items = line.split(" ")
                 items = [x.strip() for x in items if len(x.strip())]
 
-                taurex_data.write(f"{items[0]}  {items[2]}  {round((abs(float(items[3])) + abs(float(items[4])))/2, 5)}\n")
+                taurex_data.write(f"{items[0]}  {round(float(items[2])/100, 7)}  {round((abs(float(items[3])) + abs(float(items[4])))/200, 5)}\n")
 
     return INFO, DATA
 

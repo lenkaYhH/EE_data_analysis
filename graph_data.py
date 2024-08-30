@@ -345,6 +345,15 @@ def plotModel(x_vals, y_vals, x_err, y_err, target_molecules=[]):
     fig_raw.tight_layout()
     plt.plot()
 
+def plotRockPlanet():
+    """ plots the transmission spectrum of a planet with no atmosphere """
+    x_vals = [x/100 for x in range(500)]
+    y_vals = [1.8 for _ in range(500)]
+
+    plt.plot(x_vals, y_vals)
+
+    plt.ylabel("Transit Depth (%)")
+    plt.xlabel("Wavelength (micrometers)")
 
 def main():
 
@@ -359,18 +368,18 @@ def main():
     # to_plot = ["H2O", "CO2", "CO", "CH4"]
     to_plot = ["H2O", "CO2"]
 
-    for a in to_plot:
-        plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, [a])
+    # for a in to_plot:
+    #     plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, [a])
     
     # plotRaw(x_vals, y_vals, xerr_bars, yerr_bars, to_plot)
     # plotRaw(x_vals, y_vals, xerr_bars, yerr_bars)
     # plotClean(x_vals, y_vals, elements)
     # plotClean(x_vals, y_vals, ["Na"])
 
-    plotModel(x_vals, y_vals, xerr_bars, yerr_bars, [['CO2', 2, 1], ['H2O', 1, 1]])
+    # plotModel(x_vals, y_vals, xerr_bars, yerr_bars, [['CO2', 2, 1], ['H2O', 1, 1]])
 
     # plotClean(x_vals, y_vals, ["H2O"])
-
+    plotRockPlanet()
 
     plt.show()
 
